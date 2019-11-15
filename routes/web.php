@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource('posts', 'PostController');
+
 Route::get('hello', 'HelloContoroller@index');
 
 Route::get('hello/view', 'HelloContoroller@view');
