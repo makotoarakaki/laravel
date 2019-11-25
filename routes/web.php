@@ -17,8 +17,14 @@ Route::get('/', function () {
 
 Route::resource('posts', 'PostController');
 
+//Route::resource('/photos/create', 'PostController');
+
 Route::get('hello', 'HelloContoroller@index');
 
 Route::get('hello/view', 'HelloContoroller@view');
 
 Route::get('hello/list', 'HelloContoroller@list');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
