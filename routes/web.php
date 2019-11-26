@@ -16,8 +16,7 @@ Route::get('/', function () {
 });
 
 Route::resource('posts', 'PostController');
-
-//Route::resource('/photos/create', 'PostController');
+Route::get('/', 'PostController@index');
 
 Route::get('hello', 'HelloContoroller@index');
 

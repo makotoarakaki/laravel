@@ -8,7 +8,9 @@
     <body>
         @component('components.header')
         @endcomponent
-        <div class="container">
+        <div class="container pt-5">
+        　　@component('components.flash')
+        　　@endcomponent
             @yield('content')
         </div>
         @component('components.footer')
