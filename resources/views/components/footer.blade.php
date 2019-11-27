@@ -1,5 +1,3 @@
-<footer class="py-3 bg-light fixed-bottom">
-    <div class="container">
-        <span class="text-muted small">Simple Board by Laravel & Bootstrap 4</span>
-    </div>
+<footer class="fixed-bottom bg-light d-flex flex-column justify-content-end align-items-end">
+  <div class="text-muted small px-3">TODO App by Laravel & Bootstrap 4</div>
 </footer>
