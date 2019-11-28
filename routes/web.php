@@ -15,15 +15,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('posts', 'PostController');
-Route::get('/', 'PostController@index');
+// Route::resource('posts', 'PostController');
+// Route::get('/', 'PostController@index');
 
-Route::get('hello', 'HelloContoroller@index');
+// Route::get('hello', 'HelloContoroller@index');
 
-Route::get('hello/view', 'HelloContoroller@view');
+// Route::get('hello/view', 'HelloContoroller@view');
 
-Route::get('hello/list', 'HelloContoroller@list');
+// Route::get('hello/list', 'HelloContoroller@list');
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/', 'GoalController@index');
+
+Route::resource("goals", "GoalController");
+
+Route::resource("goals.todos", "TodoController");
+
+Route::post('/goals/{goal}/todos/{todo}/sort', 'TodoController@sort');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
