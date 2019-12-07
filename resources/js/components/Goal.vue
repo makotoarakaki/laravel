@@ -92,6 +92,9 @@ export default {
             goals: []
         }
     },
+    components: {
+        'goals-todos': Todos
+    },
     mounted: function () {
         this.getAllGaols();
     },
