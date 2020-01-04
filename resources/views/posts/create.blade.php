@@ -15,17 +15,37 @@
         </ul>
     </div>
 @endif
-<form method="POST" action="/laravel/posts">
+<?php
+//<form method="POST" action="{{ url('/posts/') }}" enctype=”multipart/form-data”>
+?>
+<form enctype="multipart/form-data" method="post" action="{{ url('/posts')}}">
     {{ csrf_field() }}
     <div class="form-group">
-        <label for="exampleInputEmail1">Title</label>
-        <input type="text" class="form-control" aria-describedby="emailHelp" name="title" value="{{old('title')}}">
+        <label for="exampleInputEmail1">タイトル</label>
+        <input type="text" class="form-control" name="title" value="{{old('title')}}">
     </div>
     <div class="form-group">
-        <label for="exampleInputPassword1">Content</label>
+        <label for="exampleInputPassword1">コンテンツ</label>
         <textarea class="form-control" name="content">{{old('content')}}</textarea>
     </div>
-    <button type="submit" class="btn btn-outline-primary">Submit</button>
+    <div class="form-group">
+        <label>イメージ</label>
+        <input type="file" class="form-control" id="image" name="image" value="{{old('image')}}">
+    </div>
+    <div class="form-group">
+        <label>カテゴリ</label>
+        <select name="category" class="selectNormal" value="{{old('category')}}">
+            <option value="" selected="">選択してください</option>
+            <option value="食品">食品</option>
+            <option value="おもちゃ">おもちゃ</option>
+            <option value="生活">生活</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>番号</label>
+        <input type="number" class="form-control" name="number" value="{{old('number')}}">
+   </div>
+    <button type="submit" class="btn btn-outline-primary">登録</button>
 </form>
 
 <a href="/posts">Back</a>

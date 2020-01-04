@@ -1,3 +1,4 @@
+<p>ゴールコンポーネント</p>
 <template>
     <div class="container-fruid h-100 pt-5">
         <i class="fa fa-plus pl-3" data-toggle="modal" data-target="#goalModal"></i><span class="align-middle"> Create A New Goal</span>
@@ -121,6 +122,7 @@
                             </div>
                         </div>
                     </div>
+                    <goals-todos :goalId="goal.id"></goals-todos>
                 </div>
             </div>
         </div>
@@ -130,6 +132,7 @@
 <script>
 import axios from "axios"
 import $ from "jquery"
+import TodosVue from './Todos.vue';
 export default {
     data: function() {
         return {
@@ -142,7 +145,7 @@ export default {
         }
     },
     components: {
-        'goals-todos': Todos
+        'goals-todos': TodosVue
     },
     mounted: function () {
         this.getAllGaols();
@@ -150,7 +153,7 @@ export default {
     },
     methods: {
         getAllGaols: function () {
-            axios.get("/goals").then((response) => {
+            axios.get("/laravel/goals").then((response) => {
                 for(let i = 0; i < response.data.length; i++) {
                     this.goals.push(response.data[i])
                 }
@@ -161,7 +164,7 @@ export default {
         addNewGoal: function () {
             axios.defaults.headers['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
             axios.defaults.headers['content-type'] = 'application/json';
-            axios.post("/goals", {title: this.title}).then((response) => {
+            axios.post("/laravel/goals", {title: this.title}).then((response) => {
                 this.goals.length = 0;
                 for (let i = 0; i < response.data.length; i++) {
                     this.goals.push(response.data[i])
@@ -174,7 +177,7 @@ export default {
         editGoalTitle: function () {
             axios.defaults.headers['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
             axios.defaults.headers['content-type'] = 'application/json';
-            axios.post(`/goals/${this.id}`, {title: this.title, _method: 'patch'}).then((response) => {
+            axios.post(`/laravel/goals/${this.id}`, {title: this.title, _method: 'patch'}).then((response) => {
                 this.goals.length = 0;
                 for (let i = 0; i < response.data.length; i++) {
                     this.goals.push(response.data[i])
@@ -188,7 +191,7 @@ export default {
             axios.defaults.headers['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
             axios.defaults.headers['content-type'] = 'application/json';
             console.log(this.id)
-            axios.post(`/goals/${this.id}`, {_method: 'delete'}).then((response) => {
+            axios.post(`/laravel/goals/${this.id}`, {_method: 'delete'}).then((response) => {
                 this.goals.length = 0;
                 for (let i = 0; i < response.data.length; i++) {
                     this.goals.push(response.data[i])
@@ -199,7 +202,7 @@ export default {
             this.id = ""
          },
         getAllTags: function () {
-            axios.get("/tags").then((response) => {
+            axios.get("/laravel/tags").then((response) => {
                 console.log(response)
                 for(let i = 0; i < response.data.length; i++) {
                     this.tags.push(response.data[i])
@@ -213,7 +216,7 @@ export default {
         addNewTag: function () {
             axios.defaults.headers['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
             axios.defaults.headers['content-type'] = 'application/json';
-            axios.post("/tags", {title: this.tagTitle}).then((response) => {
+            axios.post("/laravel/tags", {title: this.tagTitle}).then((response) => {
                 this.tags.length = 0;
                 for (let i = 0; i < response.data.length; i++) {
                     this.tags.push(response.data[i])
@@ -226,7 +229,7 @@ export default {
         editTagTitle: function (id) {
             axios.defaults.headers['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
             axios.defaults.headers['content-type'] = 'application/json';
-            axios.post(`/tags/${id}`, {title: this.tagTitle, _method: 'patch'}).then((response) => {
+            axios.post(`/laravel/tags/${id}`, {title: this.tagTitle, _method: 'patch'}).then((response) => {
                 this.tags.length = 0;
                 for (let i = 0; i < response.data.length; i++) {
                     this.tags.push(response.data[i])
@@ -240,7 +243,7 @@ export default {
             axios.defaults.headers['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
             axios.defaults.headers['content-type'] = 'application/json';
 
-            axios.post(`/tags/${id}`, {_method: 'delete'}).then((response) => {
+            axios.post(`/laravel/tags/${id}`, {_method: 'delete'}).then((response) => {
                 this.tags.length = 0;
                 for (let i = 0; i < response.data.length; i++) {
                     this.tags.push(response.data[i])

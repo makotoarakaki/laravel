@@ -178,7 +178,7 @@ export default {
         addTodoTag: function (todoId, tagId) {
             axios.defaults.headers['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
             axios.defaults.headers['content-type'] = 'application/json';
-            axios.post(`/goals/${this.goalId}/todos/${todoId}/tags/${tagId}`).then((response) => {
+            axios.post(`/laravel/goals/${this.goalId}/todos/${todoId}/tags/${tagId}`).then((response) => {
                 this.todos.length = 0;
                 for (let i = 0; i < response.data.length; i++) {
                     this.todos.push(response.data[i])
@@ -191,7 +191,7 @@ export default {
         removeTodoTag: function (todoId, tagId) {
             axios.defaults.headers['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
             axios.defaults.headers['content-type'] = 'application/json';
-            axios.post(`/goals/${this.goalId}/todos/${todoId}/tags/${tagId}`, {_method: "delete"}).then((response) => {
+            axios.post(`/laravel/goals/${this.goalId}/todos/${todoId}/tags/${tagId}`, {_method: "delete"}).then((response) => {
                 this.todos.length = 0;
                 for (let i = 0; i < response.data.length; i++) {
                     this.todos.push(response.data[i])
@@ -204,7 +204,7 @@ export default {
         addNewTodo: function () {
             axios.defaults.headers['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
             axios.defaults.headers['content-type'] = 'application/json';
-            axios.post(`/goals/${this.goalId}/todos`, {content: this.content, position: this.todos.length}).then((response) => {
+            axios.post(`/laravel/goals/${this.goalId}/todos`, {content: this.content, position: this.todos.length}).then((response) => {
                 this.todos.length = 0;
                 for (let i = 0; i < response.data.length; i++) {
                     this.todos.push(response.data[i])
@@ -218,7 +218,7 @@ export default {
             axios.defaults.headers['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
             axios.defaults.headers['content-type'] = 'application/json';
             let done = todo.done == 0 ? true : false;
-            axios.post(`/goals/${this.goalId}/todos/${todo.id}`, {content: todo.content, position: todo.position, done: done, _method: "patch"}).then((response) => {
+            axios.post(`/laravel/goals/${this.goalId}/todos/${todo.id}`, {content: todo.content, position: todo.position, done: done, _method: "patch"}).then((response) => {
                 this.todos.length = 0;
                 console.log(response)
                 for (let i = 0; i < response.data.length; i++) {
@@ -232,7 +232,7 @@ export default {
         editTodoContent: function (todo) {
             axios.defaults.headers['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
             axios.defaults.headers['content-type'] = 'application/json';
-            axios.post(`/goals/${todo.goal_id}/todos/${todo.id}`, {content: this.content, position: todo.position, done: todo.done, _method: "patch"}).then((response) => {
+            axios.post(`/laravel/goals/${todo.goal_id}/todos/${todo.id}`, {content: this.content, position: todo.position, done: todo.done, _method: "patch"}).then((response) => {
                 this.todos.length = 0;
                 console.log(response)
                 for (let i = 0; i < response.data.length; i++) {
@@ -247,7 +247,7 @@ export default {
             if(confirm("Delete?")) {
                 axios.defaults.headers['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
                 axios.defaults.headers['content-type'] = 'application/json';
-                axios.post(`/goals/${this.goalId}/todos/${todo.id}`, {_method: "delete"}).then((response) => {
+                axios.post(`/laravel/goals/${this.goalId}/todos/${todo.id}`, {_method: "delete"}).then((response) => {
                     this.todos.length = 0;
                     console.log(response)
                     for (let i = 0; i < response.data.length; i++) {
@@ -262,7 +262,7 @@ export default {
             axios.defaults.headers['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
             axios.defaults.headers['content-type'] = 'application/json';
             console.log(this.sort_id)
-            axios.post(`/goals/${this.goalId}/todos/${todo.id}/sort`, {sortId: this.sort_id - 1}).then((response) => {
+            axios.post(`/laravel/goals/${this.goalId}/todos/${todo.id}/sort`, {sortId: this.sort_id - 1}).then((response) => {
                 this.todos.length = 0;
                 console.log(response)
                 for (let i = 0; i < response.data.length; i++) {

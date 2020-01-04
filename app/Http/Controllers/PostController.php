@@ -41,12 +41,17 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
         ]);
+        //ファイル名を取得
+        $filename = $request->file('image')->getClientOriginalName();
         $post = new Post();
-        $post->title = $request->input('title');
-        $post->content = $request->input('content');
-        $post->save();
+        // 配列のimageの値を書き換える
+        $storedata =  array_replace($request->all(), array('image' => $filename));
+        $post->fill($storedata)->save();        
 
-        return redirect()->route('posts.show', ['id' => $post->id])->with('message', 'Post was successfully created.');
+        // ファイルの保存
+        $request->file('image')->storeAs('public/'.$post->id.'/', $filename);
+ 
+        return redirect()->route('posts.show', ['id' => $post->id])->with('message', '新しい記事を登録しました。');
     }
 
     /**
@@ -84,11 +89,21 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
         ]);
-       $post->title = $request->input('title');
-        $post->content = $request->input('content');
-        $post->save();
+        // 画像の制御処理
+        $filename = '';
+        if (is_null( $request->file('image') )) {
+            $filename = $request->input('hiddenimage');
+        } else {
+            //ファイル名を取得
+            $filename = $request->file('image')->getClientOriginalName();
+            // ファイルの保存
+            $request->file('image')->storeAs('public/'.$post->id.'/', $filename);
+        }
+        // 配列のimageの値を書き換える
+        $storedata =  array_replace($request->all(), array('image' => $filename));
+        $post->fill($storedata)->save();
 
-        return redirect()->route('posts.show', ['id' => $post->id])->with('message', 'Post was successfully updated.');
+        return redirect()->route('posts.show', ['id' => $post->id])->with('message', '更新しました。');
     }
 
     /**
@@ -102,5 +117,12 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->route('posts.index');
+    }
+
+    public function rules()
+    {
+        return [
+            'photo' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ];
     }
 }
