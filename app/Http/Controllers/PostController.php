@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -14,8 +16,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-
+        $posts = DB::table('posts')
+            ->join('categories', 'categories.id', '=', 'posts.category')
+            ->select('posts.*', 'categories.categoryName')
+            ->get();
+ 
         return view('posts.index', compact('posts'));
     }
 
@@ -26,7 +31,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $categorie = Category::query()->get();
+        return view('posts.create')->with(compact('categorie'));
     }
 
     /**
@@ -35,7 +41,7 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Post $post)
     {
         $request->validate([
             'title' => 'required|max:255',
@@ -43,15 +49,13 @@ class PostController extends Controller
         ]);
         //ファイル名を取得
         $filename = $request->file('image')->getClientOriginalName();
-        $post = new Post();
         // 配列のimageの値を書き換える
         $storedata =  array_replace($request->all(), array('image' => $filename));
         $post->fill($storedata)->save();        
-
         // ファイルの保存
         $request->file('image')->storeAs('public/'.$post->id.'/', $filename);
  
-        return redirect()->route('posts.show', ['id' => $post->id])->with('message', '新しい記事を登録しました。');
+        return redirect(route('posts.show', $post->id))->with('message', '新しい記事を登録しました。');
     }
 
     /**
@@ -60,8 +64,9 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($id)
     {
+        $post = Post::findOrFail($id);
         return view('posts.show', compact('post'));
     }
 
@@ -73,7 +78,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        $categorie = Category::query()->get();
+        return view('posts.edit')->with(compact('post','categorie'));
     }
 
     /**
@@ -103,7 +109,7 @@ class PostController extends Controller
         $storedata =  array_replace($request->all(), array('image' => $filename));
         $post->fill($storedata)->save();
 
-        return redirect()->route('posts.show', ['id' => $post->id])->with('message', '更新しました。');
+        return redirect(route('posts.show', $post->id))->with('message', '新しい記事を登録しました。');
     }
 
     /**

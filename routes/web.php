@@ -20,6 +20,7 @@ Route::resource('posts', 'PostController');
 
 //Route::get('laravel', 'PostController@index');
 //Route::post('/posts/update/{id}', 'PostController@update');//データ更新
+//Route::post('/posts/store', 'HomeController@store');
 
 
 
@@ -30,7 +31,6 @@ Route::resource('posts', 'PostController');
 // Route::get('hello/list', 'HelloContoroller@list');
 
 Route::get('/', 'HomeController@index');
-Route::post('/posts/store', 'HomeController@store');
 //Route::get('/laravel', 'GoalController@index');
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -15,9 +15,6 @@
         </ul>
     </div>
 @endif
-<?php
-//<form enctype="multipart/form-data" method="post" action="{{ url('/posts')}}">
-?>
 <form enctype="multipart/form-data" method="post" action="{{ url('/posts/') }}/{{ $post->id }}">
 
 @csrf
@@ -41,13 +38,19 @@
     <div class="form-group">
         <label>カテゴリ</label>
         <select name="category" class="selectNormal">
-            <option value="{{ old('category', $post->category) }}" selected="">
-                {{ old('category', $post->category) }}
-            </option>
+ <?php
+?>
             <option value="">選択してください</option>
-            <option value="食品">食品</option>
-            <option value="おもちゃ">おもちゃ</option>
-            <option value="生活">生活</option>
+            @foreach($categorie as $value)
+                @if($value->id == $post->category)
+                    <option value="{{ $value->id }}" selected="">
+                        {{ old('category', $value->categoryName) }}
+                    </option>
+                @else
+                    <option value="{{ $value->id }}">{{ $value->categoryName }}</option>
+                @endif
+            @endforeach
+
         </select>
     </div>
     <div class="form-group">

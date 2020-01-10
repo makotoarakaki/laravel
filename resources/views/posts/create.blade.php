@@ -15,10 +15,7 @@
         </ul>
     </div>
 @endif
-<?php
-//<form method="POST" action="{{ url('/posts/') }}" enctype=”multipart/form-data”>
-?>
-<form enctype="multipart/form-data" method="post" action="{{ url('/posts')}}">
+<form enctype="multipart/form-data" method="post" action="{{ url('/posts/')}}">
     {{ csrf_field() }}
     <div class="form-group">
         <label for="exampleInputEmail1">タイトル</label>
@@ -34,11 +31,13 @@
     </div>
     <div class="form-group">
         <label>カテゴリ</label>
-        <select name="category" class="selectNormal" value="{{old('category')}}">
-            <option value="" selected="">選択してください</option>
-            <option value="食品">食品</option>
-            <option value="おもちゃ">おもちゃ</option>
-            <option value="生活">生活</option>
+<?php
+?>
+       <select name="category" class="selectNormal" value="{{old('category')}}">
+        <option value="" selected="">選択してください</option>
+                @foreach($categorie as $value)
+                    <option value="{{ $value->id }}">{{ $value->categoryName }}</option>
+                @endforeach
         </select>
     </div>
     <div class="form-group">

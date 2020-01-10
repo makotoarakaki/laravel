@@ -13,7 +13,7 @@
                 <p class="card-text">{{ $post->content }}</p>
                 <p class="card-text">{{ $post->image }}</p>
                 <p class="card-text"><img class="" src="{{ asset('public/storage/') }}/{{ $post->id }}/{{ $post->image }}"></p>
-                <p class="card-text">{{ $post->category }}</p>
+                <p class="card-text">{{ $post->categoryName }}</p>
                 <p class="card-text">{{ $post->number }}</p>
 
                 <div class="d-flex" style="height: 36.4px;">
