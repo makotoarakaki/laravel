@@ -5,8 +5,19 @@
 @section('content')
     <h1>Posts</h1>
 
-    @foreach($posts as $post)
+    <form id="submit_form" method="post" action="{{ url('/posts/') }}">
+    {{ csrf_field() }}
+    <div class="form-group">
+        <label>カテゴリ</label>
+       <select name="category" class="selectNormal" id="category" value="{{old('category')}}">
+                @foreach($categorie as $value)
+                    <option value="{{ $value->id }}">{{ $value->categoryName }}</option>
+                @endforeach
+        </select>
+    </div>
+    </form>
 
+    @foreach($posts as $post)
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">{{ $post->title }}</h5>
@@ -29,4 +40,11 @@
         </div>
     @endforeach
     <a href="/laravel/posts/create">新規登録</a>
-@endsection
+    {{ $posts->links() }}
+ @endsection
+ <script>
+ const selected = $("select[name=category]");
+    selected.on('change', function(){
+        window.location.href = selected.val();
+    });
+ </script>

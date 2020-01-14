@@ -5,9 +5,14 @@
 @section('content')
     <div class="card">
         <div class="card-body">
+        @foreach($posts as $post)
             <h5 class="card-title">{{ $post->title }}</h5>
             <p class="card-text">{{ $post->content }}</p>
-
+            <p class="card-text">{{ $post->image }}</p>
+            <p class="card-text"><img class="" src="{{ asset('public/storage/') }}/{{ $post->id }}/{{ $post->image }}"></p>
+            <p class="card-text">{{ $post->categoryName }}</p>
+            <p class="card-text">{{ $post->number }}</p>
+        @endforeach
             <div class="d-flex" style="height: 36.4px;">
                 <button class="btn btn-outline-primary">Show</button>
                 <a href="/laravel/posts/{{ $post->id }}/edit" class="btn btn-outline-primary">Edit</a>

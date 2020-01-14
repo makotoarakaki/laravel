@@ -14,14 +14,15 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+    //dd($request);
+        $categorie = Category::query()->get();
         $posts = DB::table('posts')
             ->join('categories', 'categories.id', '=', 'posts.category')
-            ->select('posts.*', 'categories.categoryName')
-            ->get();
+            ->select('posts.*', 'categories.categoryName')->paginate(5);
  
-        return view('posts.index', compact('posts'));
+        return view('posts.index', compact('posts', 'categorie'));
     }
 
     /**
@@ -66,8 +67,16 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::findOrFail($id);
-        return view('posts.show', compact('post'));
+//        $post = Post::findOrFail($id);
+
+        $posts = DB::table('posts')
+        ->select('posts.*', 'categories.categoryName')
+        ->join('categories', 'categories.id', '=', 'posts.category')
+        ->where('posts.id', $id)
+        ->get();
+ //dd($posts);       
+
+        return view('posts.show', compact('posts'));
     }
 
     /**

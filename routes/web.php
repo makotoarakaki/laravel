@@ -16,6 +16,8 @@ Route::get('/', function () {
 });
 
 Route::resource('posts', 'PostController');
+Route::post('/', 'PostController@index');
+
 //Route::post('laravel/posts/store', 'PostController@store');
 
 //Route::get('laravel', 'PostController@index');

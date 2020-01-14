@@ -31,8 +31,6 @@
     </div>
     <div class="form-group">
         <label>カテゴリ</label>
-<?php
-?>
        <select name="category" class="selectNormal" value="{{old('category')}}">
         <option value="" selected="">選択してください</option>
                 @foreach($categorie as $value)
